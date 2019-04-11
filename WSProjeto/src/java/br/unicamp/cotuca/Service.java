@@ -50,4 +50,13 @@ public class Service {
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
     }
+    
+    @GET
+    @Path("/ConsultarAlunos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String consultaAlunos(){
+        //TODO return proper representation object  
+        
+    }
+    
 }
