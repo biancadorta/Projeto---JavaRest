@@ -5,6 +5,8 @@
  */
 package br.unicamp.cotuca;
 
+import bd.core.*;
+import bd.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -51,12 +53,12 @@ public class Service {
     public void putJson(String content) {
     }
     
-    @GET
+    /*@GET
     @Path("/ConsultarAlunos")
     @Produces(MediaType.APPLICATION_JSON)
-    public String consultaAlunos(){
+    public MeuResultSet consultaAlunos(){
         //TODO return proper representation object  
         
-    }
+    }*/
     
 }

@@ -1,4 +1,4 @@
-package bd.dbos;
+package br.unicamp.cotuca.bd.dbos;
 
 public class Livro implements Cloneable
 {
@@ -116,7 +116,7 @@ public class Livro implements Cloneable
             ret = new Livro (this);
         }
         catch (Exception erro)
-        {} // nao trato, pq this nunca é null e construtor de
+        {} // nao trato, pq this nunca ï¿½ null e construtor de
            // copia da excecao qdo seu parametro for null
 
         return ret;
