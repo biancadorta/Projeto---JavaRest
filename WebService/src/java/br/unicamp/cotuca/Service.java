@@ -52,11 +52,15 @@ public class Service {
     @Path("consultaRa/{ra}") 
     @Consumes(MediaType.APPLICATION_JSON)    
     @Produces(MediaType.APPLICATION_JSON)
-    public Aluno getAlunoByRA(@PathParam("ra")String ra)throws Exception {
+    public String getAlunoByRA(@PathParam("ra")String ra)throws Exception {
         //TODO return proper representation object
         //throw new UnsupportedOperationException();
-       return Alunos.getAluno(ra);
+        String nome = Alunos.getAluno(ra).getNome();
+        return nome;
+        
     }
+    
+    
     
     @GET
     @Path("consultaNome/{nome}")
@@ -67,8 +71,27 @@ public class Service {
         return Alunos.getAlunos(nome);
     } 
     
+    
+    @GET
+    @Path("Hello")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAlunoByNome() throws Exception {
+        //TODO return proper representation object
+        return "OIIII MUNDOOOOOOOOOOOOOOO";
+    } 
+    
     @POST
-    @Path("incluirAluno")    
+    @Path("incluirAluno")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public MeuResultSet incluiAluno(Aluno aluno) throws Exception{
+        Alunos.incluir(aluno);
+        return Alunos.getAlunos(); 
+    }
+    
+    /*
+         • DELETE, para excluir o aluno do banco de dados.
+    */
 
     /**
      * PUT method for updating or creating an instance of GenericResource
@@ -78,4 +101,6 @@ public class Service {
     @Consumes(MediaType.APPLICATION_JSON)
     public void putXml(String content) {
     }
+    
+ 
 }
