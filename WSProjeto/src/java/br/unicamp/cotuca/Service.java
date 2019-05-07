@@ -68,7 +68,14 @@ public class Service {
     @Path("/InserirAluno")
     @Consumes(MediaType.APPLICATION_JSON)
     public void inserirAluno(){
-    }
-    
-    
+        
+    }  
+
+    @GET
+    @Path("/ConsultarAlunos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public MeuResultSet consultarAlunos(){
+        
+    }       
 }
+    
