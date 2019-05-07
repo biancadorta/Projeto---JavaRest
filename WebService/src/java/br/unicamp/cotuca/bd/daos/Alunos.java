@@ -178,7 +178,7 @@ public static boolean cadastrado (String ra) throws Exception
 
         return aluno;
     }
-
+    
     public static MeuResultSet getAlunos() throws Exception
     {
         MeuResultSet resultado = null;
@@ -191,6 +191,31 @@ public static boolean cadastrado (String ra) throws Exception
                   "FROM ALUNO2019";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
+
+            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar alunos");
+        }
+
+        return resultado;
+    }
+
+    public static MeuResultSet getAlunos(String nome) throws Exception
+    {
+        MeuResultSet resultado = null;
+
+        try
+        {
+            String sql;
+
+            sql = "SELECT * " +
+                  "FROM ALUNO2019 WHERE NOME = ?";
+            
+            BDSQLServer.COMANDO.prepareStatement (sql);
+
+            BDSQLServer.COMANDO.setString(1, nome);
 
             resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
         }
