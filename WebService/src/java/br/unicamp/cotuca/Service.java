@@ -29,13 +29,35 @@ import javax.ws.rs.core.MediaType;
 @Path("generic")
 public class Service {
 
+    private static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     @Context
     private UriInfo context;
+    
 
     /**
      * Creates a new instance of GenericResource
      */
     public Service() {
+        try{
+            MeuResultSet resultado = Alunos.getAlunos();
+
+           for(;;)
+            {
+                Aluno aluno = new Aluno();
+                aluno.setRa(resultado.getString("ra"));
+                aluno.setNome(resultado.getString("nome"));
+                aluno.setEmail(resultado.getString("email"));
+                listaAlunos.add(aluno);
+                
+                if(resultado.isLast())
+                    break;
+                
+                resultado.next();
+            }
+        }
+        catch(Exception erro){
+        }    
+              
     }
 
    
@@ -63,30 +85,7 @@ public class Service {
     @GET
     @Path("/consulta")
     @Produces(MediaType.APPLICATION_JSON)    
-    public ArrayList<Aluno> getAlunos()throws Exception {
-        
-        ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
-        try{
-            MeuResultSet resultado = Alunos.getAlunos();
-
-           for(;;)
-            {
-                Aluno aluno = new Aluno();
-                aluno.setRa(resultado.getString("ra"));
-                aluno.setRa(resultado.getString("nome"));
-                aluno.setRa(resultado.getString("email"));
-                listaAlunos.add(aluno);
-                
-                if(resultado.isLast())
-                    break;
-                
-                resultado.next();
-            }
-        }
-        catch(Exception erro){
-        }
-       
-        
+    public ArrayList<Aluno> getAlunos()throws Exception {        
         return listaAlunos;
     }
     
