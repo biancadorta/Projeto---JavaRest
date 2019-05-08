@@ -117,15 +117,12 @@ public class Service {
     @Path("incluirAluno")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public MeuResultSet incluiAluno(Aluno aluno) throws Exception{
+   public ArrayList<Aluno> incluiAluno(Aluno aluno)throws Exception 
+    {        
         Alunos.incluir(aluno);
-        return Alunos.getAlunos(); 
+        return getAlunos();        
     }
     
-    /*
-         • DELETE, para excluir o aluno do banco de dados.
-    */
 
-
- 
+  
 }
