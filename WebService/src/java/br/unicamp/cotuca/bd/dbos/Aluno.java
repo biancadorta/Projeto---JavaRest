@@ -5,18 +5,22 @@
  */
 package br.unicamp.cotuca.bd.dbos;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author u17165
  */
-public class Aluno implements Cloneable{   
+public class Aluno implements Cloneable, Serializable{   
     
     private String ra;
     private String nome;
     private String email; 
     
+    public Aluno()
+    {
+    }
     public Aluno(String ra, String nome, String email) {
         this.ra = ra;
         this.nome = nome;

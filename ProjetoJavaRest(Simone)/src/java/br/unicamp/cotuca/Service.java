@@ -33,10 +33,29 @@ public class Service {
     public Service() {
     }
 
-    /**
+
+     /**
      * Retrieves representation of an instance of br.unicamp.cotuca.Service
      * @return an instance of java.lang.String
      */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getJson() {
+        //TODO return proper representation object
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * PUT method for updating or creating an instance of Service
+     * @param content representation for the resource
+     */
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void putJson(String content) {
+    }
+ 
+
+   
     @GET
     @Path("consultaId/{Id}")
     @Consumes(MediaType.TEXT_HTML)
@@ -48,13 +67,5 @@ public class Service {
         String nome = a.getNome();
         return nome;
     }
-
-    /**
-     * PUT method for updating or creating an instance of Service
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }
+

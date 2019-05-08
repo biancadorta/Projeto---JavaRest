@@ -1,7 +1,7 @@
 package bd;
 
 import bd.core.*;
-import br.unicamp.cotuca.bd.daos.*;
+import bd.daos.*;
 
 public class BDSQLServer
 {

@@ -37,10 +37,28 @@ public class Service {
     public Service() {
     }
 
-    /**
-     * Retrieves representation of an instance of br.unicamp.cotuca.GenericResource
+   
+     /**
+     * Retrieves representation of an instance of br.unicamp.cotuca.Service
      * @return an instance of java.lang.String
      */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getJson() {
+        //TODO return proper representation object
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * PUT method for updating or creating an instance of Service
+     * @param content representation for the resource
+     */
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void putJson(String content) {
+    }
+    
+    
     @GET
     @Path("/consulta")
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,14 +111,6 @@ public class Service {
          • DELETE, para excluir o aluno do banco de dados.
     */
 
-    /**
-     * PUT method for updating or creating an instance of GenericResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putXml(String content) {
-    }
-    
+
  
 }
