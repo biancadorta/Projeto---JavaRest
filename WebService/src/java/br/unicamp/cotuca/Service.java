@@ -8,6 +8,7 @@ package br.unicamp.cotuca;
 import bd.core.MeuResultSet;
 import br.unicamp.cotuca.bd.daos.Alunos;
 import br.unicamp.cotuca.bd.dbos.Aluno;
+import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -61,9 +62,32 @@ public class Service {
     
     @GET
     @Path("/consulta")
-    @Produces(MediaType.APPLICATION_JSON)
-    public MeuResultSet getAlunos()throws Exception {
-        return Alunos.getAlunos();
+    @Produces(MediaType.APPLICATION_JSON)    
+    public ArrayList<Aluno> getAlunos()throws Exception {
+        
+        ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
+        try{
+            MeuResultSet resultado = Alunos.getAlunos();
+
+           for(;;)
+            {
+                Aluno aluno = new Aluno();
+                aluno.setRa(resultado.getString("ra"));
+                aluno.setRa(resultado.getString("nome"));
+                aluno.setRa(resultado.getString("email"));
+                listaAlunos.add(aluno);
+                
+                if(resultado.isLast())
+                    break;
+                
+                resultado.next();
+            }
+        }
+        catch(Exception erro){
+        }
+       
+        
+        return listaAlunos;
     }
     
     @GET
@@ -73,8 +97,8 @@ public class Service {
     public String getAlunoByRA(@PathParam("ra")String ra)throws Exception {
         //TODO return proper representation object
         //throw new UnsupportedOperationException();
-        String nome = Alunos.getAluno(ra).getNome();
-        return nome;
+        return Alunos.getAluno(ra).toString();
+        
         
     }
     
@@ -84,19 +108,11 @@ public class Service {
     @Path("consultaNome/{nome}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public MeuResultSet getAlunoByNome(@PathParam("nome")String nome) throws Exception {
+    public ArrayList<Aluno> getAlunoByNome(@PathParam("nome")String nome)  {
         //TODO return proper representation object
-        return Alunos.getAlunos(nome);
-    } 
-    
-    
-    @GET
-    @Path("Hello")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getAlunoByNome() throws Exception {
-        //TODO return proper representation object
-        return "OIIII MUNDOOOOOOOOOOOOOOO";
-    } 
+       return null;
+    }    
+ 
     
     @POST
     @Path("incluirAluno")
