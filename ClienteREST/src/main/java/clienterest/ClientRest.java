@@ -7,7 +7,9 @@ package clienterest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,8 +44,9 @@ public class ClientRest {
         String incluir = cliente.incluir(urlIncluir);
         
         //Mostra no formato json
-        System.out.println(getAlunos);
-      /*  System.out.println(getAlunoByRa);
+        //System.out.println(getAlunos);
+        System.out.println(alterar);
+      /* System.out.println(getAlunoByRa);
         System.out.println(getAlunoByNome);
         System.out.println(incluir);
         System.out.println(alterar);
@@ -88,7 +91,48 @@ public class ClientRest {
         con.setRequestMethod("PUT");
         con.setRequestProperty("Content-Type", "application/json");
         
-        return "";
+        InputStream is = System.in;
+        
+        System.out.println("Digite o ra:"); 
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        
+        String ra = br.readLine();
+        
+        System.out.println("Digite o novo nome:");         
+        String nomeNovo = br.readLine();
+        
+        System.out.println("Digite o novo email:");  
+        String emailNovo = br.readLine(); 
+        
+        Aluno aluno = new Aluno(ra,nomeNovo,emailNovo);
+        
+        OutputStream os = con.getOutputStream();
+        
+         //instancia um objeto da classe Gson        
+        Gson gson = new Gson(); 
+       
+        //pega os dados do filme, converte para JSON e armazena em string
+        String aux = gson.toJson(f);
+        
+        os.write(out.getBytes());              
+        
+        int responseCode = con.getResponseCode();
+        
+        System.out.println("Response Code: "+ responseCode);
+        
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(con.getInputStream())); 
+        StringBuffer response = new StringBuffer();        
+        String inputLine;
+        
+        while((inputLine = br2.readLine())!=null){
+            response.append(inputLine);
+        
+        }
+        
+        br.close();
+        con.disconnect();
+        return response.toString();
     }
 
     public String deletarPorRa(String urlDeletarPorRa) {

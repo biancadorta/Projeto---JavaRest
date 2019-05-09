@@ -150,9 +150,10 @@ public class Service {
    @Path("alterar")
    @Consumes(MediaType.APPLICATION_JSON)
    @Produces(MediaType.APPLICATION_JSON)
-   public ArrayList<Aluno> alterarAluno(Aluno aluno) throws Exception{
-       Alunos.alterar(aluno);   
-       return getAlunos();
+   public Aluno alterarAluno(Aluno aluno) throws Exception{
+       Alunos.alterar(aluno);
+       return aluno;
+       //return getAlunos();
    }   
    
    //•	DELETE, para excluir o aluno do banco de dados
