@@ -86,6 +86,6 @@ public class Aluno implements Cloneable, Serializable{
 
     @Override
     public String toString() {
-        return "Aluno{" + "ra=" + ra + ", nome=" + nome + ", email=" + email + '}';
+        return "Aluno{" + "ra:" + ra + ", nome:" + nome + ", email:" + email + '}';
     }
 }
