@@ -38,25 +38,7 @@ public class Service {
      * Creates a new instance of GenericResource
      */
     public Service() {
-        try{
-            MeuResultSet resultado = Alunos.getAlunos();
-
-           for(;;)
-            {
-                Aluno aluno = new Aluno();
-                aluno.setRa(resultado.getString("ra"));
-                aluno.setNome(resultado.getString("nome"));
-                aluno.setEmail(resultado.getString("email"));
-                listaAlunos.add(aluno);
-                
-                if(resultado.isLast())
-                    break;
-                
-                resultado.next();
-            }
-        }
-        catch(Exception erro){
-        }    
+           
               
     }
 
@@ -86,6 +68,26 @@ public class Service {
     @Path("/consulta")
     @Produces(MediaType.APPLICATION_JSON)    
     public ArrayList<Aluno> getAlunos()throws Exception {        
+        
+        try{
+            MeuResultSet resultado = Alunos.getAlunos();
+
+           for(;;)
+            {
+                Aluno aluno = new Aluno();
+                aluno.setRa(resultado.getString("ra"));
+                aluno.setNome(resultado.getString("nome"));
+                aluno.setEmail(resultado.getString("email"));
+                listaAlunos.add(aluno);
+                
+                if(resultado.isLast())
+                    break;
+                
+                resultado.next();
+            }
+        }
+        catch(Exception erro){} 
+        
         return listaAlunos;
     }
     
