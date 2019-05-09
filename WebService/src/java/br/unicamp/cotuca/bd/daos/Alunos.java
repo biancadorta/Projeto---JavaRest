@@ -117,7 +117,7 @@ public static boolean cadastrado (String ra) throws Exception
     public static void alterar (Aluno aluno) throws Exception
     {
         if (aluno==null)
-            throw new Exception ("Livro nao fornecido");
+            throw new Exception ("Aluno nao fornecido");
 
         if (!cadastrado (aluno.getRa()))
             throw new Exception ("Nao cadastrado");
@@ -126,9 +126,8 @@ public static boolean cadastrado (String ra) throws Exception
         {
             String sql;
 
-            sql = "UPDATE ALUNO2019" +
-                  "SET NOME=? " +
-                  ",EMAIL=? " +
+            sql = "UPDATE ALUNO2019 " +
+                  "SET NOME=?, EMAIL=? "+                
                   "WHERE RA = ?";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
@@ -140,9 +139,8 @@ public static boolean cadastrado (String ra) throws Exception
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
         }
-        catch (SQLException erro)
-        {
-            throw new Exception ("Erro ao atualizar dados do aluno");
+        catch (SQLException erro){
+            throw new Exception ("Erro ao atualizar dados do aluno"+"\n"+"Erro:"+erro.getMessage());
         }
     }
 

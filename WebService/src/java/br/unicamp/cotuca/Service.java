@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,9 +42,7 @@ public class Service {
     public Service() {
            
               
-    }
-
-   
+    }   
      /**
      * Retrieves representation of an instance of br.unicamp.cotuca.Service
      * @return an instance of java.lang.String
@@ -70,23 +70,26 @@ public class Service {
     public ArrayList<Aluno> getAlunos()throws Exception {        
         
         try{
-            MeuResultSet resultado = Alunos.getAlunos();
+           MeuResultSet rs = Alunos.getAlunos();                    
 
-           for(;;)
-            {
+            while(rs.next()){          
                 Aluno aluno = new Aluno();
-                aluno.setRa(resultado.getString("ra"));
-                aluno.setNome(resultado.getString("nome"));
-                aluno.setEmail(resultado.getString("email"));
-                listaAlunos.add(aluno);
-                
-                if(resultado.isLast())
-                    break;
-                
-                resultado.next();
+                aluno.setRa(rs.getString("ra"));
+                aluno.setNome(rs.getString("nome"));
+                aluno.setEmail(rs.getString("email"));
+                listaAlunos.add(aluno);             
+               
             }
+            //vai estar na ultima linha da tabela, porem nao incluimos ela, pois saimos do while
+                Aluno aluno = new Aluno();
+                aluno.setRa(rs.getString("ra"));
+                aluno.setNome(rs.getString("nome"));
+                aluno.setEmail(rs.getString("email"));
+                listaAlunos.add(aluno);          
         }
-        catch(Exception erro){} 
+        catch(Exception erro){
+            erro.getMessage();
+        } 
         
         return listaAlunos;
     }
@@ -95,23 +98,41 @@ public class Service {
     @Path("consultaRa/{ra}") 
     @Consumes(MediaType.APPLICATION_JSON)    
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAlunoByRA(@PathParam("ra")String ra)throws Exception {
-        //TODO return proper representation object
-        //throw new UnsupportedOperationException();
-        return Alunos.getAluno(ra).toString();
-        
-        
-    }
-    
+    public Aluno getAlunoByRA(@PathParam("ra")String ra)throws Exception {
+        return Alunos.getAluno(ra);           
+    }   
     
     
     @GET
     @Path("consultaNome/{nome}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ArrayList<Aluno> getAlunoByNome(@PathParam("nome")String nome)  {
-        //TODO return proper representation object
-       return null;
+    public ArrayList<Aluno> getAlunoByNome(@PathParam("nome")String nome) throws Exception{      
+        ArrayList<Aluno> lista2 = new ArrayList<>();
+        
+        try{
+            MeuResultSet rs = Alunos.getAlunos(nome);           
+
+            while(rs.next()){          
+                Aluno aluno = new Aluno();
+                aluno.setRa(rs.getString("ra"));
+                aluno.setNome(rs.getString("nome"));
+                aluno.setEmail(rs.getString("email"));
+                lista2.add(aluno);             
+
+            }
+            //vai estar na ultima linha da tabela, porem nao incluimos ela, pois saimos do while
+            Aluno aluno = new Aluno();
+            aluno.setRa(rs.getString("ra"));
+            aluno.setNome(rs.getString("nome"));
+            aluno.setEmail(rs.getString("email"));
+            lista2.add(aluno);          
+        }
+        catch(Exception erro){
+            erro.getMessage();
+        }         
+        
+        return lista2;      
     }    
  
     
@@ -119,12 +140,34 @@ public class Service {
     @Path("incluirAluno")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-   public ArrayList<Aluno> incluiAluno(Aluno aluno)throws Exception 
+    public ArrayList<Aluno> incluiAluno(Aluno aluno)throws Exception 
     {        
         Alunos.incluir(aluno);
         return getAlunos();        
-    }
-    
-
-  
+    } 
+   
+   //•	PUT, para alterar nome e email do aluno no banco de dados
+   
+   @PUT
+   @Path("alterar")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Produces(MediaType.APPLICATION_JSON)
+   public ArrayList<Aluno> alterarAluno(Aluno aluno) throws Exception{
+       
+       Alunos.alterar(aluno);     
+       
+       return getAlunos();
+   }   
+   
+   //•	DELETE, para excluir o aluno do banco de dados
+   @DELETE
+   @Path("excluirAluno/{ra}")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Produces(MediaType.APPLICATION_JSON)
+   
+   public ArrayList<Aluno> excluirAluno(@PathParam("ra")String ra) throws Exception{
+       Alunos.excluir(ra);
+       return getAlunos();
+   }
+   
 }
