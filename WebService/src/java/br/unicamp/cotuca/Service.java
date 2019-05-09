@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 @Path("generic")
 public class Service {
 
-    private static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
+    private ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     @Context
     private UriInfo context;
     
@@ -81,11 +81,11 @@ public class Service {
                
             }
             //vai estar na ultima linha da tabela, porem nao incluimos ela, pois saimos do while
-                Aluno aluno = new Aluno();
-                aluno.setRa(rs.getString("ra"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                listaAlunos.add(aluno);          
+            Aluno aluno = new Aluno();
+            aluno.setRa(rs.getString("ra"));
+            aluno.setNome(rs.getString("nome"));
+            aluno.setEmail(rs.getString("email"));
+            listaAlunos.add(aluno);          
         }
         catch(Exception erro){
             erro.getMessage();
@@ -100,8 +100,7 @@ public class Service {
     @Produces(MediaType.APPLICATION_JSON)
     public Aluno getAlunoByRA(@PathParam("ra")String ra)throws Exception {
         return Alunos.getAluno(ra);           
-    }   
-    
+    }       
     
     @GET
     @Path("consultaNome/{nome}")
@@ -140,8 +139,7 @@ public class Service {
     @Path("incluirAluno")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Aluno> incluiAluno(Aluno aluno)throws Exception 
-    {        
+    public ArrayList<Aluno> incluiAluno(Aluno aluno)throws Exception{        
         Alunos.incluir(aluno);
         return getAlunos();        
     } 
@@ -153,14 +151,12 @@ public class Service {
    @Consumes(MediaType.APPLICATION_JSON)
    @Produces(MediaType.APPLICATION_JSON)
    public ArrayList<Aluno> alterarAluno(Aluno aluno) throws Exception{
-       
-       Alunos.alterar(aluno);     
-       
+       Alunos.alterar(aluno);   
        return getAlunos();
    }   
    
    //•	DELETE, para excluir o aluno do banco de dados
-   @DELETE
+   @GET
    @Path("excluirAluno/{ra}")
    @Consumes(MediaType.APPLICATION_JSON)
    @Produces(MediaType.APPLICATION_JSON)
