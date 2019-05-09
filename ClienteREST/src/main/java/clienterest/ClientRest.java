@@ -38,9 +38,9 @@ public class ClientRest {
         String urlIncluir = "http://localhost:8080/WebService/webresources/generic/incluirAluno";
 
         String getAlunos = cliente.getAlunos(urlGetAlunos);
-        String getAlunoByRa = cliente.getAlunoByRa(urlGetAlunoPorRa);
+        //String getAlunoByRa = cliente.getAlunoByRa(urlGetAlunoPorRa);
         //String getAlunoByNome = cliente.getAlunoByNome(urlGetAlunoPorNome);
-        //String alterar = cliente.alterar(urlAlterar);
+        String alterar = cliente.alterar(urlAlterar);
        // String deletar = cliente.deletarPorRa( urlDeletarPorRa);
        // String incluir = cliente.incluir(urlIncluir);
         
@@ -81,11 +81,9 @@ public class ClientRest {
         con.disconnect();
         
         return response.toString();
-    }
-       
+    }     
    
-    
-    
+        
     public String alterar(String urlAlterar) throws MalformedURLException, IOException {
         URL objURL = new URL(urlAlterar);
         HttpURLConnection con = (HttpURLConnection) objURL.openConnection();
@@ -117,9 +115,9 @@ public class ClientRest {
         Gson gson = new Gson(); 
        
         //pega os dados do filme, converte para JSON e armazena em string
-        String aux = gson.toJson(f);
+        String aux = gson.toJson(aluno);
         
-        os.write(out.getBytes());              
+        os.write(aux.getBytes());              
         
         int responseCode = con.getResponseCode();
         
