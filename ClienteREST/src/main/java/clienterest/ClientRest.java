@@ -36,10 +36,10 @@ public class ClientRest {
 
         String getAlunos = cliente.getAlunos(urlGetAlunos);
         /*String getAlunoByRa = cliente.getAlunoByRa(urlGetAlunoPorRa);
-        String getAlunoByNome = cliente.getAlunoByNome(urlGetAlunoPorNome);
+        String getAlunoByNome = cliente.getAlunoByNome(urlGetAlunoPorNome);*/
         String alterar = cliente.alterar(urlAlterar);
         String deletar = cliente.deletarPorRa( urlDeletarPorRa);
-        String incluir = cliente.incluir(urlIncluir);*/
+        String incluir = cliente.incluir(urlIncluir);
         
         //Mostra no formato json
         System.out.println(getAlunos);
@@ -77,7 +77,28 @@ public class ClientRest {
         con.disconnect();
         
         return response.toString();
+    } 
+
+    public String alterar(String urlAlterar) throws MalformedURLException, IOException {
+        URL objURL = new URL(urlAlterar);
+        HttpURLConnection con = (HttpURLConnection) objURL.openConnection();
+       
+        con.setDoOutput(true);
+        
+        con.setRequestMethod("PUT");
+        con.setRequestProperty("Content-Type", "application/json");
+        
+        return "";
     }
-    
-    
+
+    public String deletarPorRa(String urlDeletarPorRa) {
+        return "";
+    }
+
+    public String incluir(String urlIncluir) {
+        return "";
+    }
+       
+       
+
 }

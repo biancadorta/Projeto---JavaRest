@@ -10,3 +10,4 @@
 ClienteREST/src/main/java/ClientRest.java
 *.java
 ClienteREST/src/main/java/ClientRest.java
+/ClienteREST/target/
