@@ -13,3 +13,7 @@ ClienteREST/src/main/java/ClientRest.java
 /ClienteREST/target/
 ClienteREST/src/main/java/clienterest/ClientRest.java
 *.java
+/ClienteRest/nbproject/private/
+/ClienteRest/build/
+/ClientRest/nbproject/private/
+/ClientRest/build/
