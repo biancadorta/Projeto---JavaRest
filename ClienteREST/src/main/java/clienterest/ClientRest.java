@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import bd.daos.*;
 
 /**
  *
@@ -39,10 +40,10 @@ public class ClientRest {
 
         String getAlunos = cliente.getAlunos(urlGetAlunos);
         String getAlunoByRa = cliente.getAlunoByRa(urlGetAlunoPorRa);
-        //String getAlunoByNome = cliente.getAlunoByNome(urlGetAlunoPorNome);
-        //String alterar = cliente.alterar(urlAlterar);
-       // String deletar = cliente.deletarPorRa( urlDeletarPorRa);
-       // String incluir = cliente.incluir(urlIncluir);
+        String getAlunoByNome = cliente.getAlunoByNome(urlGetAlunoPorNome);
+        String alterar = cliente.alterar(urlAlterar);
+        String deletar = cliente.deletarPorRa( urlDeletarPorRa);
+        String incluir = cliente.incluir(urlIncluir);
         
         //Mostra no formato json
         //System.out.println(getAlunos);
@@ -63,7 +64,7 @@ public class ClientRest {
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
         
-        System.out.println("\nEnviando requisiÃ§Ã£o 'GET' para URL: " + url);
+        System.out.println("\nEnviando requisição 'GET' para URL: " + url);
         
         System.out.println("Response Code: "+ responseCode);
         
@@ -82,9 +83,93 @@ public class ClientRest {
         
         return response.toString();
     }
+
+    public String getAlunoByRa(String url){
+        URL objURL = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) objURL.openConnection();
+        
+        con.setRequestMethod("GET");               
+        
+        inputStream is = System.in;
+        
+        System.out.println("Digite o ra:"); 
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        
+        String ra = br.readLine();  
+
+        OutputStream os = con.getOutputStream();
+
+         //instancia um objeto da classe Gson        
+        Gson gson = new Gson(); 
        
-   
-    
+        //converte para JSON e armazena em string
+        String aux = gson.toJson(ra);
+        
+        os.write(aux.getBytes());
+      
+        System.out.println("Response Code: "+ responseCode);
+        
+        BufferedReader br = 
+             new BufferedReader(new InputStreamReader(con.getInputStream()));
+        
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        
+        while((inputLine = br.readLine()) != null){
+            response.append(inputLine);
+        }
+        
+        br.close();
+        con.disconnect();
+        
+        return response.toString();
+
+    }  
+
+    public String getAlunoByNome(String url){
+        URL objURL = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) objURL.openConnection();
+        
+        con.setRequestMethod("GET");               
+        
+        inputStream is = System.in;
+        
+        System.out.println("Digite o nome:"); 
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        
+        String nome = br.readLine();  
+
+        OutputStream os = con.getOutputStream();
+
+         //instancia um objeto da classe Gson        
+        Gson gson = new Gson(); 
+       
+        //converte para JSON e armazena em string
+        String aux = gson.toJson(nome);
+        
+        os.write(aux.getBytes());
+      
+        System.out.println("Response Code: "+ responseCode);
+        
+        BufferedReader br = 
+             new BufferedReader(new InputStreamReader(con.getInputStream()));
+        
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        
+        while((inputLine = br.readLine()) != null){
+            response.append(inputLine);
+        }
+        
+        br.close();
+        con.disconnect();
+        
+        return response.toString();
+
+    } 
+       
     
     public String alterar(String urlAlterar) throws MalformedURLException, IOException {
         URL objURL = new URL(urlAlterar);
@@ -116,10 +201,10 @@ public class ClientRest {
          //instancia um objeto da classe Gson        
         Gson gson = new Gson(); 
        
-        //pega os dados do filme, converte para JSON e armazena em string
-        String aux = gson.toJson(f);
+        //converte para JSON e armazena em string
+        String aux = gson.toJson(aluno);
         
-        os.write(out.getBytes());              
+        os.write(aux.getBytes());              
         
         int responseCode = con.getResponseCode();
         
@@ -140,11 +225,100 @@ public class ClientRest {
     }
 
     public String deletarPorRa(String urlDeletarPorRa) {
-        return "";
+        URL objURL = new URL(url); 
+        HttpURLConnection con = (HttpURLConnection) 				   
+        objURL.openConnection();                 
+
+        con.setDoOutput(true); 
+        con.setRequestMethod("GET"); 
+        con.setRequestProperty("Content-Type","application/json");         
+
+        InputStream is = System.in;
+        
+        System.out.println("Digite o ra:"); 
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);  
+
+        String ra = br.readLine();      
+        
+        OutputStream os = con.getOutputStream();
+        
+         //instancia um objeto da classe Gson        
+        Gson gson = new Gson(); 
+       
+        //converte para JSON e armazena em string
+        String aux = gson.toJson(ra);
+        
+        os.write(aux.getBytes());              
+        
+        int responseCode = con.getResponseCode();
+        
+        System.out.println("Response Code: "+ responseCode);
+        
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(con.getInputStream())); 
+        StringBuffer response = new StringBuffer();        
+        String inputLine;
+        
+        while((inputLine = br2.readLine())!=null){
+            response.append(inputLine);        
+        }
+        
+        br.close();
+        con.disconnect();
+        return response.toString();     
     }
 
     public String incluir(String urlIncluir) {
-        return "";
+        URL objURL = new URL(urlAlterar);
+        HttpURLConnection con = (HttpURLConnection) objURL.openConnection();
+       
+        con.setDoOutput(true);
+        
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json");
+        
+        InputStream is = System.in;
+        
+        System.out.println("Digite o ra:"); 
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        
+        String ra = br.readLine();
+        
+        System.out.println("Digite o nome:");         
+        String nome = br.readLine();
+        
+        System.out.println("Digite o email:");  
+        String email = br.readLine(); 
+        
+        Aluno aluno = new Aluno(ra,nome,email);
+        
+        OutputStream os = con.getOutputStream();
+        
+         //instancia um objeto da classe Gson        
+        Gson gson = new Gson(); 
+       
+        //converte para JSON e armazena em string
+        String aux = gson.toJson(aluno);
+        
+        os.write(aux.getBytes());              
+        
+        int responseCode = con.getResponseCode();
+        
+        System.out.println("Response Code: "+ responseCode);
+        
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(con.getInputStream())); 
+        StringBuffer response = new StringBuffer();        
+        String inputLine;
+        
+        while((inputLine = br2.readLine())!=null){
+            response.append(inputLine);
+        
+        }
+        
+        br.close();
+        con.disconnect();
+        return response.toString();
     }
        
        
