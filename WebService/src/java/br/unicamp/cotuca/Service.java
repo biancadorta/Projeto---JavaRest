@@ -99,6 +99,7 @@ public class Service {
     @Consumes(MediaType.APPLICATION_JSON)    
     @Produces(MediaType.APPLICATION_JSON)
     public Aluno getAlunoByRA(@PathParam("ra")String ra)throws Exception {
+
         return Alunos.getAluno(ra);           
     }       
     
